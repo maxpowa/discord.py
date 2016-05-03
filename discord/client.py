@@ -106,7 +106,7 @@ class WebSocket(WebSocketBaseClient):
             msg = zlib.decompress(msg.data, 15, 10490000)
             msg = msg.decode('utf-8')
 
-        response = json.loads(str(msg))
+        response = json.loads(unicode(msg))
         log.debug('WebSocket Event: {}'.format(response))
         self.dispatch('socket_response', response)
 
@@ -642,7 +642,7 @@ class Client(object):
 
         channel_id = self._resolve_destination(destination)
 
-        content = str(content)
+        content = unicode(content)
         mentions = self._resolve_mentions(content, mentions)
 
         url = '{base}/{id}/messages'.format(base=endpoints.CHANNELS, id=channel_id)
@@ -772,7 +772,7 @@ class Client(object):
         """
 
         channel = message.channel
-        content = str(new_content)
+        content = unicode(new_content)
 
         url = '{}/{}/messages/{}'.format(endpoints.CHANNELS, channel.id, message.id)
         payload = {
